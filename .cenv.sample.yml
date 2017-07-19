@@ -1,0 +1,5 @@
+registry: http://localhost:3000
+tiomeout: 1000
+username: admin
+password: admin
+token: 123456789

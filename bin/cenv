@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+
+const pckage = require('../package.json');
+const program = require('commander');
+const execa = require('execa');
+
+const cenv = require('../src/index');
+
+program
+  .version(pckage.version)
+  .arguments('<environment> <command...>')
+  .action(env => (program.environment = env))
+  .option('-f, --file [file_path]', 'Config file path')
+  .option('-r, --registry [registry_url]', 'Registry url')
+  .option('-u, --username [username]', 'Registry username')
+  .option('-p, --password [password]', 'Registry password')
+  .option('-t, --token [token]', 'Registry authenticated token')
+  .option('-o, --timeout [timeout]', 'Registry connection timeout')
+  .parse(process.argv);
+
+const cmd = program.args.slice(1)[0];
+
+const onSuccess = () => {
+  execa(cmd[0], cmd.slice(1), { stdio: 'inherit' })
+    .on('error', (err) => {
+      console.error(err.message);
+      process.exit(1);
+    })
+    .on('exit', exitCode => process.exit(exitCode));
+};
+
+const onError = (err) => {
+  console.error(err);
+  process.exit(1);
+};
+
+cenv(program)
+  .then(onSuccess)
+  .catch(onError);

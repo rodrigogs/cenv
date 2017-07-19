@@ -1,0 +1,36 @@
+{
+  "name": "cenv",
+  "version": "1.0.0-alpha",
+  "main": "src/index.js",
+  "repository": "git@bitbucket.org:rodrigogs/cenv.git",
+  "author": {
+    "name": "Rodrigo Gomes da Silva",
+    "email": "rodrigo.smscom@gmail.com",
+    "url": "https://github.com/rodrigogs"
+  },
+  "license": "BSD-3-Clause",
+  "scripts": {
+    "eslint": "eslint . --ext .js",
+    "test": "mocha --ui tdd test/**/*.spec.js",
+    "coverage": "nyc --reporter=html npm test"
+  },
+  "bin": {
+    "cenv": "bin/cenv"
+  },
+  "dependencies": {
+    "axios": "^0.16.2",
+    "commander": "^2.11.0",
+    "debug": "^2.6.8",
+    "execa": "^0.7.0",
+    "ini": "^1.3.4",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "chai": "^4.0.2",
+    "eslint": "^4.2.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.7.0",
+    "mocha": "^3.4.2",
+    "nyc": "^11.0.3"
+  }
+}
