@@ -12,6 +12,8 @@ rules:
   no-underscore-dangle: off
   import/extensions: off
   no-bitwise: off
+  no-new: off
+  no-unused-expressions: off
 globals:
   process: on
   describe: on

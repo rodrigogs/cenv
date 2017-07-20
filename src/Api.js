@@ -1,5 +1,6 @@
 const debug = require('debug')('cenv:api');
 const axios = require('axios');
+const url = require('url');
 
 /**
  * @param {Error} err
@@ -28,7 +29,7 @@ class Api {
     if (!hasToken && !hasAuth) throw new Error('Neither token or user auth was specified');
 
     const axiosConfig = {
-      baseURL: `${config.registry}/v1/`,
+      baseURL: url.resolve(config.registry, 'v1'),
       timeout: config.timeout || 1000,
     };
     if (config.token) {
