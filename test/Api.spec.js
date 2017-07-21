@@ -17,29 +17,54 @@ const { registry, timeout, username, password, token } = COMPLETE_CONFIG;
 const registryUrl = `${registry}/v1`;
 
 // Mocks
-nock(registryUrl)
-  .post('/auth', (body) => {
-    return body.username === username && body.password === password;
-  })
-  .reply(200, { token });
+const apiMock = () => {
+  nock(registryUrl)
+    .persist()
 
-nock(registryUrl)
-  .post('/auth', (body) => {
-    return body.username !== username || body.password !== password;
-  })
-  .reply(401, { error: 'Unauthorized' });
+    .post('/auth', (body) => {
+      return body.password === 'error';
+    })
+    .reply(500, { error: 'Server error' })
 
-nock(registryUrl)
-  .get('/environment/env')
-  .reply(200, []);
+    .post('/auth', (body) => {
+      return body.password === 'requestError';
+    })
+    .replyWithError('request error')
 
-nock(registryUrl)
-  .get('/environment/notAnEnv')
-  .reply(404, { error: 'Environment "notAnEnv" not found' });
+    .post('/auth', (body) => {
+      return body.username === username && body.password === password;
+    })
+    .reply(200, { token })
+
+    .post('/auth', (body) => {
+      return body.username !== username || body.password !== password;
+    })
+    .reply(401, { error: 'Unauthorized' })
+
+    .get('/environment/env')
+    .reply(200, [])
+
+    .get('/environment/notAnEnv')
+    .reply(404, { error: 'Environment "notAnEnv" not found' })
+
+    .get('/environment/error')
+    .reply(500, { error: 'Server error' })
+
+    .get('/environment/requestError')
+    .replyWithError('request error');
+};
 
 // Tests
+before(() => {
+  apiMock();
+});
+
+after(() => {
+  nock.cleanAll();
+});
+
 suite('Api', () => {
-  suite('#Constructor()', () => {
+  suite('Constructor', () => {
     test('should throw TypeError when no config is given', () => {
       chai.expect(() => new Api()).to.throw('Cannot read property \'registry\' of undefined');
     });
@@ -96,12 +121,36 @@ suite('Api', () => {
       api.instance.defaults.headers.common.Authorization.should.be.equal(`Bearer ${token}`);
     });
 
+    test('should automatically authenticate when token is present', async () => {
+      const api = new Api({ registry, token });
+      await api.authenticate();
+      api.instance.defaults.headers.common.Authorization.should.be.equal(`Bearer ${token}`);
+    });
+
     test('should fail to authenticate', async () => {
       const api = new Api({ registry, username, password: 'fail' });
       try {
         await api.authenticate();
       } catch (err) {
         err.message.should.be.equal('Unauthorized');
+      }
+    });
+
+    test('should fail to request authenticate with an unexpected error', async () => {
+      const api = new Api({ registry, username, password: 'requestError' });
+      try {
+        await api.authenticate();
+      } catch (err) {
+        err.message.should.be.equal('request error');
+      }
+    });
+
+    test('should fail to authenticate with an unexpected server error', async () => {
+      const api = new Api({ registry, username, password: 'error' });
+      try {
+        await api.authenticate();
+      } catch (err) {
+        err.message.should.be.equal('Server error');
       }
     });
   });
@@ -113,10 +162,31 @@ suite('Api', () => {
       variables.data.should.be.an('array');
     });
 
-    // test('should fail to authenticate', async () => {
-    //   const api = new Api({ registry, username, password });
-    //   const variables = await api.environment('notAnEnv');
-    //   variables.data.should.be.an('array');
-    // });
+    test('should fail to retrieve an unexistent environment', async () => {
+      const api = new Api({ registry, username, password });
+      try {
+        await api.environment('notAnEnv');
+      } catch (err) {
+        err.message.should.be.equal('Environment "notAnEnv" not found');
+      }
+    });
+
+    test('should fail to request an environment with an unexpected error', async () => {
+      const api = new Api({ registry, username, password });
+      try {
+        await api.environment('requestError');
+      } catch (err) {
+        err.message.should.be.equal('request error');
+      }
+    });
+
+    test('should fail to retrieve an environment with an unexpected server error', async () => {
+      const api = new Api({ registry, username, password });
+      try {
+        await api.environment('error');
+      } catch (err) {
+        err.message.should.be.equal('Server error');
+      }
+    });
   });
 });
