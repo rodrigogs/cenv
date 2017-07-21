@@ -17,7 +17,7 @@ const handleErrors = (err) => {
  */
 class Api {
   /**
-   * @param {Config} config
+   * @param {Object} config
    */
   constructor(config) {
     debug('configuring api');
