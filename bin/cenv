@@ -18,6 +18,8 @@ program
   .option('-o, --timeout [timeout]', 'Registry connection timeout')
   .parse(process.argv);
 
+if (!program.environment) program.help();
+
 const cmd = program.args.slice(1)[0];
 
 const onSuccess = () => {
