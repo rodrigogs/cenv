@@ -4,15 +4,14 @@ const ConfigFile = require('./ConfigFile');
 const Api = require('./Api');
 
 /**
- * @param {Object} [options = {}]
+ * @param {String} environment
+ * @param {Object} [options={}]
  * @return {Promise.<void>}
  */
-const cenv = async (options = {}) => {
-  const { environment, file } = options;
-
+const cenv = async (environment, options = {}) => {
   debug(`loading "${environment}" environment`);
 
-  const config = new ConfigFile(file);
+  const config = new ConfigFile(options.file, options.relative);
   Object.assign(config, options);
 
   const api = new Api(config);

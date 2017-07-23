@@ -17,7 +17,7 @@ const { registry, timeout, username, password, token } = COMPLETE_CONFIG;
 const registryUrl = `${registry}/v1`;
 
 // Mocks
-const apiMock = () => {
+const mockApi = () => {
   nock(registryUrl)
     .persist()
 
@@ -42,7 +42,7 @@ const apiMock = () => {
     .reply(401, { error: 'Unauthorized' })
 
     .get('/environment/env')
-    .reply(200, [])
+    .reply(200, [{ name: 'var', value: 'value' }])
 
     .get('/environment/notAnEnv')
     .reply(404, { error: 'Environment "notAnEnv" not found' })
@@ -56,7 +56,7 @@ const apiMock = () => {
 
 // Tests
 before(() => {
-  apiMock();
+  mockApi();
 });
 
 after(() => {
@@ -160,6 +160,9 @@ suite('Api', () => {
       const api = new Api({ registry, username, password });
       const variables = await api.environment('env');
       variables.data.should.be.an('array');
+      variables.data.should.have.length(1);
+      variables.data[0].name.should.be.equal('var');
+      variables.data[0].value.should.be.equal('value');
     });
 
     test('should fail to retrieve an unexistent environment', async () => {

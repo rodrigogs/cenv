@@ -11,6 +11,7 @@ program
   .arguments('<environment> <command...>')
   .action(env => (program.environment = env))
   .option('-f, --file [file_path]', 'Config file path')
+  .option('-r, --relative', 'Relative file path?')
   .option('-r, --registry [registry_url]', 'Registry url')
   .option('-u, --username [username]', 'Registry username')
   .option('-p, --password [password]', 'Registry password')
@@ -21,6 +22,7 @@ program
 if (!program.environment) program.help();
 
 const cmd = program.args.slice(1)[0];
+program.relative = !!program.relative;
 
 const onSuccess = () => {
   execa(cmd[0], cmd.slice(1), { stdio: 'inherit' })
@@ -36,6 +38,6 @@ const onError = (err) => {
   process.exit(1);
 };
 
-cenv(program)
+cenv(program.environment, program)
   .then(onSuccess)
   .catch(onError);

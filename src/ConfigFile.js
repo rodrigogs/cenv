@@ -13,7 +13,7 @@ const cwd = process.cwd();
  */
 const _exists = (file) => {
   try {
-    fs.existsSync(file);
+    fs.accessSync(file);
   } catch (err) {
     return !(err.code === 'ENOENT');
   }
@@ -64,7 +64,7 @@ class ConfigFile {
     if (!file) throw new Error(`File "${this.filePath}" not found`);
 
     this.registry = file.registry;
-    this.timeout = file.timeout;
+    this.timeout = file.timeout ? Number(file.timeout) : undefined;
     this.username = file.username;
     this.password = file.password;
     this.token = file.token;

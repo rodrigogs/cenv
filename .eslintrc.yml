@@ -18,7 +18,9 @@ globals:
   process: on
   describe: on
   before: on
+  beforeEach: on
   after: on
+  afterEach: on
   suite: on
   test: on
   it: on
