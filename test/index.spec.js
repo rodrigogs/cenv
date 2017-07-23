@@ -2,7 +2,6 @@ const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const nock = require('nock');
 const mockfs = require('mock-fs');
-const path = require('path');
 
 chai.use(chaiAsPromised);
 chai.should();
@@ -56,7 +55,6 @@ const JSON_INVALID_CONFIG_FILE = '{ERROR}';
 const YML_INVALID_CONFIG_FILE = `
 ERROR
 `;
-const cwd = process.cwd();
 
 // Mocks
 const mockApi = () => {

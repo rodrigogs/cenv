@@ -1,6 +1,8 @@
 const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
 const nock = require('nock');
 
+chai.use(chaiAsPromised);
 chai.should();
 
 const Api = require('../src/Api');
@@ -129,29 +131,17 @@ suite('Api', () => {
 
     test('should fail to authenticate', async () => {
       const api = new Api({ registry, username, password: 'fail' });
-      try {
-        await api.authenticate();
-      } catch (err) {
-        err.message.should.be.equal('Unauthorized');
-      }
+      await api.authenticate().should.be.rejectedWith('Unauthorized');
     });
 
     test('should fail to request authenticate with an unexpected error', async () => {
       const api = new Api({ registry, username, password: 'requestError' });
-      try {
-        await api.authenticate();
-      } catch (err) {
-        err.message.should.be.equal('request error');
-      }
+      await api.authenticate().should.be.rejectedWith('request error');
     });
 
     test('should fail to authenticate with an unexpected server error', async () => {
       const api = new Api({ registry, username, password: 'error' });
-      try {
-        await api.authenticate();
-      } catch (err) {
-        err.message.should.be.equal('Server error');
-      }
+      await api.authenticate().should.be.rejectedWith('Server error');
     });
   });
 
@@ -167,29 +157,17 @@ suite('Api', () => {
 
     test('should fail to retrieve an unexistent environment', async () => {
       const api = new Api({ registry, username, password });
-      try {
-        await api.environment('notAnEnv');
-      } catch (err) {
-        err.message.should.be.equal('Environment "notAnEnv" not found');
-      }
+      await api.environment('notAnEnv').should.be.rejectedWith('Environment "notAnEnv" not found');
     });
 
     test('should fail to request an environment with an unexpected error', async () => {
       const api = new Api({ registry, username, password });
-      try {
-        await api.environment('requestError');
-      } catch (err) {
-        err.message.should.be.equal('request error');
-      }
+      await api.environment('requestError').should.be.rejectedWith('request error');
     });
 
     test('should fail to retrieve an environment with an unexpected server error', async () => {
       const api = new Api({ registry, username, password });
-      try {
-        await api.environment('error');
-      } catch (err) {
-        err.message.should.be.equal('Server error');
-      }
+      await api.environment('error').should.be.rejectedWith('Server error');
     });
   });
 });
