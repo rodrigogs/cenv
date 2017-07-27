@@ -17,7 +17,7 @@ const cenv = async (environment, options = {}) => {
   const api = new Api(config);
 
   const request = await api.environment(environment);
-  request.data.forEach((variable) => {
+  request.data.variables.forEach((variable) => {
     const { name, value } = variable;
     debug(`adding "${name}" variable`);
 

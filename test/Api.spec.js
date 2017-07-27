@@ -44,7 +44,7 @@ const mockApi = () => {
     .reply(401, { error: 'Unauthorized' })
 
     .get('/environment/env')
-    .reply(200, [{ name: 'var', value: 'value' }])
+    .reply(200, { variables: [{ name: 'var', value: 'value' }] })
 
     .get('/environment/notAnEnv')
     .reply(404, { error: 'Environment "notAnEnv" not found' })
@@ -149,10 +149,11 @@ suite('Api', () => {
     test('should retrieve an environment from the registry', async () => {
       const api = new Api({ registry, username, password });
       const variables = await api.environment('env');
-      variables.data.should.be.an('array');
-      variables.data.should.have.length(1);
-      variables.data[0].name.should.be.equal('var');
-      variables.data[0].value.should.be.equal('value');
+      variables.data.should.be.an('object');
+      variables.data.variables.should.be.an('array');
+      variables.data.variables.should.have.length(1);
+      variables.data.variables[0].name.should.be.equal('var');
+      variables.data.variables[0].value.should.be.equal('value');
     });
 
     test('should fail to retrieve an unexistent environment', async () => {

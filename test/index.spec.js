@@ -82,7 +82,7 @@ const mockApi = () => {
     .reply(401, { error: 'Unauthorized' })
 
     .get('/environment/env')
-    .reply(200, [{ name: 'var', value: 'value' }])
+    .reply(200, { variables: [{ name: 'var', value: 'value' }] })
 
     .get('/environment/notAnEnv')
     .reply(404, { error: 'Environment "notAnEnv" not found' })

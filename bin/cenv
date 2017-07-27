@@ -9,7 +9,9 @@ const cenv = require('../src/index');
 program
   .version(pckage.version)
   .arguments('<environment> <command...>')
-  .action(env => (program.environment = env))
+  .action((env) => {
+    program.environment = env;
+  })
   .option('-f, --file [file_path]', 'Config file path')
   .option('-r, --relative', 'Relative file path?')
   .option('-r, --registry [registry_url]', 'Registry url')
