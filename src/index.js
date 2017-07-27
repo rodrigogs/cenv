@@ -21,7 +21,7 @@ const cenv = async (environment, options = {}) => {
     const { name, value } = variable;
     debug(`adding "${name}" variable`);
 
-    if (!process.env[name]) process.env[name] = value;
+    process.env[name] = value;
   });
 
   debug('environment loaded');
