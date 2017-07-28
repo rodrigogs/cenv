@@ -48,18 +48,42 @@ Usage
 * **-V, --version** - Output the version number
 * **-f, --file [file_path]** - Sets the config file path
   - Defaults to **.cenv**
+  - cenv can read the config from [**json**](https://github.com/rodrigogs/cenv/blob/master/.cenv.sample.json), [**yaml**](https://github.com/rodrigogs/cenv/blob/master/.cenv.sample.yml) or [**ini**](https://github.com/rodrigogs/cenv/blob/master/.cenv.sample) files
   - Use **false** as the file path to disable loading config from file
 * **-r, --registry [registry_url]** - Sets the cenv-registry url
+  - This option overwrites config file **registry**
 * **-u, --username [username]** - Sets registry username
+  - This option overwrites config file **username**
 * **-p, --password [password]** - Sets registry password
+  - This option overwrites config file **password**
 * **-t, --token [token]** - Sets registry authenticated token
+  - This option overwrites config file **token**
 * **-o, --timeout [timeout]** - Sets registry request timeout in milliseconds
   - Defaults to **1000**
+  - This option overwrites config file **timeout**
 * **-h, --help [timeout]** - Output usage information
 
 Examples
 --------
+
+#### As cli
+---
 ![Usage](https://github.com/rodrigogs/cenv/blob/master/media/usage.gif)
+
+#### As lib
+---
+```javascript
+const cenv = require('cenv');
+
+// cenv returns a promise, so you can wait for the environment to be loaded
+cenv('myenv', { file: '../.cenv.yml' })
+  .then(() => {
+    console.log(process.env.myenv); // myvalue
+  });
+
+// You can also set an interval to update your application's environment from time to time
+setInterval(() => cenv('anotherenv', { file: '../.cenv.json' }), 300000);
+```
 
 License
 -------
