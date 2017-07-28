@@ -57,6 +57,10 @@ Usage
   - Defaults to **1000**
 * **-h, --help [timeout]** - Output usage information
 
+Examples
+--------
+
+
 License
 -------
 [Licence](https://github.com/rodrigogs/cenv/blob/master/LICENSE) © Rodrigo Gomes da Silva
