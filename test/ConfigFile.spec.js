@@ -84,7 +84,7 @@ after(() => {
 suite('Config', () => {
   suite('Constructor', () => {
     test('should throw an error when file doesn\'t exist', () => {
-      chai.expect(() => new ConfigFile('.test')).to.throw(`File "${path.join(cwd, '.test')}" not found`);
+      chai.expect(() => new ConfigFile('.test')).to.throw(`File "${path.resolve('.test')}" not found`);
     });
 
     test('should throw an error if json file is invalid', () => {
@@ -97,16 +97,16 @@ suite('Config', () => {
 
     test('should default file path to .cenv when no file is specified', () => {
       const config = new ConfigFile();
-      config.filePath.should.be.equal(path.join(cwd, '.cenv'));
+      config.filePath.should.be.equal(path.resolve('.cenv'));
     });
 
     test('should resolve relative file path', () => {
       const config = new ConfigFile('relative/fake/dir/.cenv.yml');
-      config.filePath.should.be.equal(path.join(cwd, 'relative/fake/dir/.cenv.yml'));
+      config.filePath.should.be.equal(path.resolve('relative/fake/dir/.cenv.yml'));
     });
 
     test('should resolve absolute file path', () => {
-      const config = new ConfigFile('/root/fake/dir/.cenv.yml', false);
+      const config = new ConfigFile('/root/fake/dir/.cenv.yml');
       config.filePath.should.be.equal(path.resolve('/root/fake/dir/.cenv.yml'));
     });
 
@@ -118,7 +118,7 @@ suite('Config', () => {
     test('should create a ConfigFile instance from an ini file', () => {
       const config = new ConfigFile('relative/fake/dir/.cenv');
       config.should.be.a('object');
-      config.filePath.should.be.equal(path.join(cwd, 'relative/fake/dir/.cenv'));
+      config.filePath.should.be.equal(path.resolve('relative/fake/dir/.cenv'));
       config.registry.should.be.equal(registry);
       config.timeout.should.be.equal(timeout);
       config.username.should.be.equal(username);

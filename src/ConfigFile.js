@@ -4,8 +4,6 @@ const fs = require('fs');
 const YAML = require('yamljs');
 const ini = require('ini');
 
-const cwd = process.cwd();
-
 /**
  * @param {String} file
  * @return {boolean}
@@ -55,10 +53,9 @@ const _read = (file) => {
 class ConfigFile {
   /**
    * @param {String} [fileName = '.cenv']
-   * @param {Boolean} [relative = true]
    */
-  constructor(fileName = '.cenv', relative = true) {
-    this.filePath = relative ? path.join(cwd, fileName) : path.resolve(fileName);
+  constructor(fileName = '.cenv') {
+    this.filePath = path.resolve(fileName);
 
     const file = _read(this.filePath);
     if (!file) throw new Error(`File "${this.filePath}" not found`);

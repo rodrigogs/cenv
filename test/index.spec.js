@@ -129,7 +129,7 @@ suite('cenv', () => {
   });
 
   test('should load an absolute file', async () => {
-    await cenv('env', { file: '/root/fake/dir/.cenv.yml', relative: false }).should.be.fulfilled;
+    await cenv('env', { file: '/root/fake/dir/.cenv.yml' }).should.be.fulfilled;
     process.env.var.should.be.equal('value');
   });
 

@@ -13,7 +13,6 @@ program
     program.environment = env;
   })
   .option('-f, --file [file_path]', 'Config file path')
-  .option('-r, --absolute', 'Indicates that file path is absolute')
   .option('-r, --registry [registry_url]', 'Registry url')
   .option('-u, --username [username]', 'Registry username')
   .option('-p, --password [password]', 'Registry password')
@@ -24,7 +23,6 @@ program
 if (!program.environment) program.help();
 
 const cmd = program.args.slice(1)[0];
-program.absolute = !!program.absolute;
 
 const onSuccess = () => {
   execa(cmd[0], cmd.slice(1), { stdio: 'inherit' })
