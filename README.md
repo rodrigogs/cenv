@@ -59,7 +59,7 @@ Usage
 
 Examples
 --------
-
+![Usage](https://github.com/rodrigogs/cenv/blob/master/media/usage.gif)
 
 License
 -------
