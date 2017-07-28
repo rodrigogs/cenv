@@ -28,7 +28,7 @@ class Api {
     if (!hasRegistry) throw new Error('Registry ulr must be specified');
     if (!hasToken && !hasAuth) throw new Error('Neither token or user auth was specified');
 
-    if (!config.registry.startsWith('http') || !config.registry.startsWith('https')) {
+    if (!config.registry.startsWith('http') && !config.registry.startsWith('https')) {
       config.registry = `http://${config.registry}`;
     }
 
