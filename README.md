@@ -1,4 +1,4 @@
-# cenv
+# cenv :cloud:
 
 [![Build Status](https://travis-ci.org/rodrigogs/cenv.svg?branch=master)](https://travis-ci.org/rodrigogs/cenv)
 [![Code Climate](https://codeclimate.com/github/rodrigogs/cenv/badges/gpa.svg)](https://codeclimate.com/github/rodrigogs/cenv)
