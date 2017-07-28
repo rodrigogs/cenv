@@ -130,6 +130,7 @@ suite('cenv', () => {
 
   test('should disable config file loading when file path is \'false\'', async () => {
     await cenv('env', { file: 'false' }).should.be.rejectedWith('Registry ulr must be specified');
+    await cenv('env', { file: false }).should.be.rejectedWith('Registry ulr must be specified');
   });
 
   test('should load an absolute file', async () => {
