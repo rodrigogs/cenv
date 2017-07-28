@@ -87,6 +87,11 @@ suite('Api', () => {
       chai.expect(() => new Api({ registry, username })).to.throw('Neither token or user auth was specified');
     });
 
+    test('should default registry protocol to http when no protocol is specified', () => {
+      const api = new Api({ registry: 'localhost:3000', token });
+      api.instance.defaults.baseURL.should.be.equal('http://localhost:3000/v1');
+    });
+
     test('should create an Api instance with the given config', () => {
       const api = new Api(COMPLETE_CONFIG);
       api.should.be.a('object');
