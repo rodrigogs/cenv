@@ -3,7 +3,7 @@
   "description": "Get your environment variables directly from the cloud",
   "version": "1.0.0-alpha",
   "main": "src/index.js",
-  "repository": "git@bitbucket.org:rodrigogs/cenv.git",
+  "repository": "git@github.com:rodrigogs/cenv.git",
   "author": {
     "name": "Rodrigo Gomes da Silva",
     "email": "rodrigo.smscom@gmail.com",
