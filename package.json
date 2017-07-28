@@ -1,5 +1,6 @@
 {
   "name": "cenv",
+  "description": "Get your environment variables directly from the cloud",
   "version": "1.0.0-alpha",
   "main": "src/index.js",
   "repository": "git@bitbucket.org:rodrigogs/cenv.git",
