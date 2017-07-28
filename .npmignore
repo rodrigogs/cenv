@@ -1,0 +1,12 @@
+/media/
+/.eslintignore
+/.codeclimate.yml
+/.cenv.sample
+/.eslintrc.yml
+/.cenv.sample.json
+/.gitignore
+/.editorconfig
+/.cenv.sample.yml
+/.travis.yml
+/.nvmrc
+/.gitattributes
