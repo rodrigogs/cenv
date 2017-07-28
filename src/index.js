@@ -11,7 +11,8 @@ const Api = require('./Api');
 const cenv = async (environment, options = {}) => {
   debug(`loading "${environment}" environment`);
 
-  const config = new ConfigFile(options.file);
+  const loadFile = (options.file !== false && options.file !== 'false');
+  const config = loadFile ? new ConfigFile(options.file) : {};
   Object.assign(config, options);
 
   const api = new Api(config);
