@@ -54,7 +54,7 @@ Usage
 * **-p, --password [password]** - Sets registry password
 * **-t, --token [token]** - Sets registry authenticated token
 * **-o, --timeout [timeout]** - Sets registry request timeout in milliseconds
-  - Defaults to **1000**
+  - Defaults to **1000**
 * **-h, --help [timeout]** - Output usage information
 
 Examples
