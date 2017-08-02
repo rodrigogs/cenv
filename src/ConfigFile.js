@@ -33,7 +33,7 @@ const _read = (file) => {
 
   debug(`found "${file}" file`);
 
-  if (file.endsWith('.yml')) {
+  if (file.endsWith('.yml') || file.endsWith('.yaml')) {
     debug('parsing yml file');
     return YAML.load(file);
   }
