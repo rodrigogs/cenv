@@ -61,24 +61,16 @@ const mockApi = () => {
   nock(registryUrl)
     .persist()
 
-    .post('/auth', (body) => {
-      return body.password === 'error';
-    })
+    .post('/auth', body => body.password === 'error')
     .reply(500, { error: 'Server error' })
 
-    .post('/auth', (body) => {
-      return body.password === 'requestError';
-    })
+    .post('/auth', body => body.password === 'requestError')
     .replyWithError('request error')
 
-    .post('/auth', (body) => {
-      return body.username === username && body.password === password;
-    })
+    .post('/auth', body => body.username === username && body.password === password)
     .reply(200, { token })
 
-    .post('/auth', (body) => {
-      return body.username !== username || body.password !== password;
-    })
+    .post('/auth', body => body.username !== username || body.password !== password)
     .reply(401, { error: 'Unauthorized' })
 
     .get('/environment/env')
