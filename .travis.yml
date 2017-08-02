@@ -22,5 +22,6 @@ install:
   - npm install yarn -g
   - yarn install
 script:
+  - yarn eslint
   - yarn run coverage
   - codeclimate-test-reporter < coverage/lcov.info
