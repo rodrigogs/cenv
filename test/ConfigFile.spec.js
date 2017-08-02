@@ -52,7 +52,6 @@ const JSON_INVALID_CONFIG_FILE = '{ERROR}';
 const YML_INVALID_CONFIG_FILE = `
 ERROR
 `;
-const cwd = process.cwd();
 
 // Mocks
 const mockFileSystem = () => {
